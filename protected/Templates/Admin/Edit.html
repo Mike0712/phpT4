@@ -1,0 +1,38 @@
+{% extends 'back.html' %}
+{% block content %}
+    <div class="container">
+
+        <div class="blog-header">
+            <h1 class="blog-title">Админ-панель</h1>
+
+
+        </div>
+
+        <hr>
+        <h3>Редактировать новость</h3>
+            {% for error in errors %}
+                <div class="alert alert-danger">
+                    {{error.getMessage()}}
+                </div>
+                {% else %}
+            {% endfor %}
+        <div class="col-sm-10 col-sm-offset-0 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <form class="form-group-sm" action="/admin/save/" method="post">
+                    <input name="title" type="text" class="form-control" placeholder="Заголовок"
+                           value="{{data.title}}">
+                    <br>
+                    <textarea name="lead" class="form-control"
+                              placeholder="Текст Новости">{{ data.lead }}</textarea>
+                    <br>
+                    <input name="author_id" type="text" class="form-control" placeholder="Номер автора"
+                           value="{{ data.author_id}}">
+                    <input name="id" type="hidden" value="{{data.id}}">
+                    <br>
+                    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Править новость">
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
