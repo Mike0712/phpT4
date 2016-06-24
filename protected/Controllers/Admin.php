@@ -6,7 +6,6 @@ use App\AdminDataTable;
 use App\Models\Article;
 use App\Models\Albums;
 use App\Models\Artists;
-use T4\Core\Config;
 use T4\Mvc\Controller;
 
 class Admin extends
@@ -19,7 +18,7 @@ class Admin extends
 
     public function actionPosts()
     {
-        $table = new AdminDataTable(Article::findAll(),
+        $this->data->table = (new AdminDataTable(Article::findAll(),
             [
                 'Id Новости' => function ($u) {
                     return $u->__id;
@@ -30,13 +29,13 @@ class Admin extends
                 'Содержание' => function ($u) {
                     return $u->lead;
                 },
-            ]);
-        $this->data->table = $table->render();
+            ]))->render();
     }
 
     public function actionAlbums()
     {
-        $table = new AdminDataTable(Albums::findAll(),
+
+        $this->data->table = (new AdminDataTable(Albums::findAll(),
             [
                 'Id альбома' => function ($u) {
                     return $u->__id;
@@ -48,14 +47,12 @@ class Admin extends
                 'Год выхода' => function ($u) {
                     return 'Текст: ' . $u->year;
                 },
-            ]);
-
-        $this->data->table = $table->render();
+            ]))->render();
     }
 
     public function actionArtists()
     {
-        $table = new AdminDataTable(Artists::findAll(),
+        $this->data->table = (new AdminDataTable(Artists::findAll(),
             [
                 'Id музыканта' => function ($u) {
                     return $u->__id;
@@ -67,8 +64,35 @@ class Admin extends
                 'Биография' => function ($u) {
                     return $u->biography;
                 },
-            ]);
+            ]))->render();
+    }
 
-        $this->data->table = $table->render();
+    public function actionInsert()
+    {
+
+    }
+
+    public function actionUpdate()
+    {
+        $this->data->article = Article::findByPK($_GET['id']);
+    }
+
+    public function actionSave()
+    {
+        $article = new Article();
+        if(!empty($_POST['__id'])){
+            $article->setNew(false);
+        }
+        $article->fill($_POST);
+
+        $article->save();
+        header('Location: /admin/');
+    }
+
+    public function actionDelete()
+    {
+        $article = Article::findByPK($_GET['id']);
+        $article->delete();
+        header('Location: /admin/');
     }
 }

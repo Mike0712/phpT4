@@ -12,7 +12,7 @@ class m_1466668007_createAlbumsTable
     {
         $this->createTable('albums', [
             'title' => ['type' => 'string'],
-            'year' => ['type' => 'string'],
+            'year' => ['type' => 'int'],
         ]);
     }
 

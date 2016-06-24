@@ -11,7 +11,8 @@ class Index
 
     public function actionDefault()
     {
-        $this->data->title = $this->app->config->projectinfo->title;
+        $this->app->assets->publishCssFile('/Layouts/css/bootstrap.min.css');
+        $this->app->assets->publishCssFile('/Layouts/css/blog.css');
         $this->data->items = Article::findAll();
     }
 
