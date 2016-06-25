@@ -12,7 +12,8 @@ class m_1466668141_createMembersTable
     {
         $this->createTable('members', [
             'name' => ['type' => 'string'],
-            'biography' => ['type' => 'text'],
+            '__biography_id' => ['type' => 'link'],
+            '__status_id' => ['type' => 'link'],
         ]);
     }
 

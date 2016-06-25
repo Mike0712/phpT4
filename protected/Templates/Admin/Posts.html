@@ -28,8 +28,8 @@
             <td>{{ cell[:100] }}</td>
             {% endfor %}
 
-            <td><p><a href="/admin/update/?id={{ attribute( row, 'Id Новости') }}">Редактировать</a></p>
-                <p><a href="/admin/delete/?id={{ attribute( row, 'Id Новости') }}">Удалить</a></p></td>
+            <td><p><a href="/admin/update/?id={{ attribute( row, 'Id Новости') }}" class="btn btn-info">Редактировать</a></p>
+                <p><a href="/admin/delete/?id={{ attribute( row, 'Id Новости') }}" class="btn btn-danger">Удалить</a></p></td>
         </tr>
             {% endfor %}
         <?php endforeach ?>

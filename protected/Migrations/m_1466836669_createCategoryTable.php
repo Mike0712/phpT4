@@ -4,22 +4,20 @@ namespace App\Migrations;
 
 use T4\Orm\Migration;
 
-class m_1466540093_createNewsTable
+class m_1466836669_createCategoryTable
     extends Migration
 {
 
     public function up()
     {
-        $this->createTable('news', [
+        $this->createTable('category', [
             'title' => ['type' => 'string'],
-            'lead' => ['type' => 'text'],
-            '__category_id' => ['type' => 'link'],
         ]);
     }
 
     public function down()
     {
-        $this->dropTable('news');
+        $this->dropTable('category');
     }
-
+    
 }

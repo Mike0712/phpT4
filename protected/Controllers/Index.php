@@ -2,7 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Models\Albums;
 use App\Models\Article;
+use App\Models\Artists;
+use App\Models\Biography;
+use App\Models\Category;
+use App\Models\Status;
 use T4\Mvc\Controller;
 
 class Index
@@ -18,7 +23,9 @@ class Index
 
     public function actionVasya()
     {
-        $this->data->foo = 42;
+        $status = Status::findByPK(2);
+        var_dump($status->members);
+        die;
     }
 
     public function actionPetya()

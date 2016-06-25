@@ -69,7 +69,7 @@ class Admin extends
 
     public function actionInsert()
     {
-
+        // Добавить нечего
     }
 
     public function actionUpdate()
@@ -86,13 +86,13 @@ class Admin extends
         $article->fill($_POST);
 
         $article->save();
-        header('Location: /admin/');
+        $this->redirect('/admin/');
     }
 
     public function actionDelete()
     {
         $article = Article::findByPK($_GET['id']);
         $article->delete();
-        header('Location: /admin/');
+        $this->redirect('/admin/');
     }
 }
