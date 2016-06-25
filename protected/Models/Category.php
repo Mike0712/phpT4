@@ -9,23 +9,22 @@ use T4\Orm\Model;
  * @package App\Models
  *
  * @property string $title
- * @property string $lead
- * @property \App\Models\Category $category
+ * @property \App\Models\Article $news
+ *
  */
 
-class Article
+class Category
     extends Model
 {
     public static $schema = [
-        'table' => 'news',
+        'table' => 'category',
         'columns' => [
             'title' => ['type' => 'string'],
-            'lead'  => ['type' => 'text'],
             ],
         'relations' =>[
-            'category' => [
-                'type' => self::BELONGS_TO,
-                'model' => Category::class,
+            'news' => [
+                    'type' => self::HAS_MANY,
+                    'model' => Article::class,
             ],
         ],
     ];
