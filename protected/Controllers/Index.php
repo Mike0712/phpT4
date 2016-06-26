@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Models\Albums;
 use App\Models\Article;
 use App\Models\Artists;
-use App\Models\Biography;
 use App\Models\Category;
 use App\Models\Songs;
 use App\Models\Status;
@@ -20,7 +19,6 @@ use T4\Mvc\Controller;
  * @property /App/Models/Category @category
  * @property /App/Models/Category @cats
  * @property /App/Models/Status @status
- * @property /App/Models/Biography @biography
  * @property /App/Models/Albums @albums
  * @property /App/Models/Songs @songs
  */
