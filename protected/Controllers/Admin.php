@@ -6,6 +6,11 @@ use App\AdminDataTable;
 use App\Models\Article;
 use App\Models\Albums;
 use App\Models\Artists;
+use App\Models\Biography;
+use App\Models\Category;
+use App\Models\Songs;
+use App\Models\Status;
+use T4\Core\MultiException;
 use T4\Mvc\Controller;
 
 class Admin extends
@@ -18,53 +23,37 @@ class Admin extends
 
     public function actionPosts()
     {
-        $this->data->table = (new AdminDataTable(Article::findAll(),
-            [
-                'Id Новости' => function ($u) {
-                    return $u->__id;
-                },
-                'Заголовок' => function ($u) {
-                    return 'Тема: ' . $u->title;
-                },
-                'Содержание' => function ($u) {
-                    return $u->lead;
-                },
-            ]))->render();
+        $this->data->table = Article::findAll();
     }
 
     public function actionAlbums()
     {
-
-        $this->data->table = (new AdminDataTable(Albums::findAll(),
-            [
-                'Id альбома' => function ($u) {
-                    return $u->__id;
-                },
-                'Название альбома' => function ($u) {
-                    return 'Название: ' . $u->title;
-                },
-
-                'Год выхода' => function ($u) {
-                    return 'Текст: ' . $u->year;
-                },
-            ]))->render();
+        $this->data->table = Albums::findAll();
     }
 
     public function actionArtists()
     {
-        $this->data->table = (new AdminDataTable(Artists::findAll(),
-            [
-                'Id музыканта' => function ($u) {
-                    return $u->__id;
-                },
-                'Имя' => function ($u) {
-                    return $u->name;
-                },
+        $this->data->table = Artists::findAll();
+    }
 
-                'Биография' => function ($u) {
-                    return $u->biography;
-                },
-            ]))->render();
+    public function actionStatus()
+    {
+        $this->data->table = Status::findAll();
+    }
+
+    public function actionCategory()
+    {
+        $this->data->table = Category::findAll();
+    }
+
+    public function actionSongs()
+    {
+        $this->data->table = Songs::findAll();
+    }
+
+    public function actionBiography()
+    {
+        $this->data->table = Biography::findAll();
     }
 
     public function actionInsert()
@@ -79,14 +68,18 @@ class Admin extends
 
     public function actionSave()
     {
-        $article = new Article();
-        if(!empty($_POST['__id'])){
-            $article->setNew(false);
-        }
-        $article->fill($_POST);
+        try {
+            $article = new Article();
+            if (!empty($_POST['__id'])) {
+                $article->setNew(false);
+            }
+            $article->fill($_POST);
 
-        $article->save();
-        $this->redirect('/admin/');
+            $article->save();
+            $this->redirect('/admin/');
+        } catch (MultiException $e){
+            $this->data->errors = $e;
+        }
     }
 
     public function actionDelete()
