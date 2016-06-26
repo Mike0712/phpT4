@@ -1,0 +1,10 @@
+{% extends 'front.html' %}
+
+{% block content %}
+
+<h1>{{ artist.name }}</h1>
+<div class="blog-post">
+    <p>Биография: {{ artist.biography.biography | default('Биография не заполнена') }}</p>
+</div>
+
+{% endblock %}

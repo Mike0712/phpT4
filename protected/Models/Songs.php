@@ -17,7 +17,7 @@ class Songs extends
     Model
 {
     public static $schema = [
-        'table' => 'news',
+        'table' => 'songs',
         'columns' => [
             'song' => ['type' => 'string'],
             'link' => ['type' => 'text'],

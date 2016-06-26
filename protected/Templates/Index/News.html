@@ -1,0 +1,27 @@
+{% extends 'front.html' %}
+
+{% block content %}
+{% if cats or single %}
+{% for one in cats %}
+<div class="blog-post">
+
+    <h2 class="blog-post-title">{{ one.title }}</h2>
+
+    <p>Категория: {{ one.category.title | default('Нет категории') }}</p>
+
+    <p>{{ one.lead | slice(0,200) }} <a href="/index/news/?id={{one.getPk()}}">Читать подробнее</a></p>
+
+    <p></p>
+</div>
+{% else %}
+<h1>{{ single.title }}</h1>
+<div class="blog-post">
+    <p>Категория: {{ single.category.title | default('Нет Категории') }}</p>
+
+    <p>{{ single.lead }}</p>
+</div>
+{% endfor %}
+{% else %}
+<h2>Новости не найдены</h2>
+{% endif %}
+{% endblock %}

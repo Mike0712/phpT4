@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,32 +33,27 @@
             <div class="container">
                 <div id="navbar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Главная</a></li>
+                        <li class="active"><a href="/index/default">Главная</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">События<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">События<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Все события</a></li>
-                                <li><a href="#">Гастроли</a></li>
-                                <li><a href="#">Из жизни группы</a></li>
+                                <li><a href="/index/news">Все события</a></li>
+                                {% for cat in category %}
+                                    <li><a href="/index/news/?cat={{ cat.getPk() }}"> {{cat.title}}</a></li>
+                                {% endfor %}
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">Участники <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
+                                {% for art in status.members %}
+                                    <li><a href="/index/artists/?m={{art.getPk()}}">{{art.name}}</a></li>
+                                {% endfor %}
                             </ul>
                         </li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="/index/albums">Дискография</a></li>
                     </ul>
                 </div>
             </div>
@@ -68,20 +63,60 @@
 <!--endmenu-->
 
     <div class="container">
+<br>
+
+<div class="row">
+    <div class="col-sm-8 blog-main">
+
+        {% block content %}{% endblock %}
+        {% block nav %}{% endblock %}
+
+    </div><!-- /.blog-main -->
+
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="sidebar-module">
+            <h4>Анонс</h4>
+            <ol class="list-unstyled">
+
+                {% for cat in category.0.news %}
+                <li>
+                    <a href="/index/news/?id={{cat.getPk()}}">{{cat.title}}</a>
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
+
+        <div class="sidebar-module">
+            <h4>Новости из жизни группы</h4>
+            <ol class="list-unstyled">
+
+                {% for cat in category.1.news %}
+                <li>
+                    <a href="/index/news?id={{cat.getPk()}}">{{cat.title}}</a>
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
+        <div class="sidebar-module">
+            <h4>Ссылки</h4>
+            <ol class="list-unstyled">
+                <li><a href="https://github.com/Mike0712/T4">GitHub</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Facebook</a></li>
+            </ol>
+        </div>
+    </div><!-- /.blog-sidebar -->
 
 
+
+    </div><!-- /.row-->
     </div><!-- /.container -->
-
-    <footer class="blog-footer">
-        <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-        <p>
-            <a href="#">Back to top</a>
-        </p>
-    </footer>
-
-
-</div> <!-- /container -->
-
+<footer class="blog-footer">
+    <p><a href="#">@Фан сайт</a> группы Red Hot Chili Papers. Все права защищены. 2011 - {{ published | date('Y') }} </p>
+    <p>
+        <a href="#">Наверх</a>
+    </p>
+</footer>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

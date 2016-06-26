@@ -1,3 +1,19 @@
 {% extends 'Front.html' %}
 
-{% block galleryLink %}href="#"{% endblock %}
+{% block content %}
+
+{% for one in all %}
+<div class="blog-post">
+
+    <h2 class="blog-post-title">{{ one.title }}</h2>
+
+    <p>Категория: <a href="/index/news/?cat={{one.__category_id }}">{{ one.category.title | default('Нет категории') }}</a></p>
+    <p>{{ one.lead | slice(0,200) }} <a href="/index/news/?id={{one.getPk()}}">Читать подробнее</a></p>
+
+</div>
+{% else %}
+<p>Пока статей нет!<p>
+    {% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'Front.html' %}
+
+{% block content %}
+<table class="table table-responsive">
+    <thead>
+    <tr>
+        <th>Название песни</th>
+        <th>Год выпуска</th>
+        <th>Альбом</th>
+        <th>Ссылка на трек</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if albums %}
+    {% for album in albums.songs %}
+    <tr>
+        <td>{{ album.song }}</td>
+        <td>{{ albums.year}}</td>
+        <td>{{ albums.title}}</td>
+        <td>{{ album.link | default('Отсутствует') }}</td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    {% for song in songs %}
+    <tr>
+        <td>{{ song.song }}</td>
+        <td>{{ song.album.year}}</td>
+        <td>{{ song.album.title}}</td>
+        <td>{{ song.link | default('Отсутствует') }}</td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+</table>
+{% endblock %}
