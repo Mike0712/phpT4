@@ -26,6 +26,7 @@ class Admin extends
         $this->data->th = ['id' => '', 'Название' => '', 'Содержание' => '', 'Id категории' => '' ]; // Задаём названия
                                                     // по умолчанию названия как в базе
         $this->data->table = Article::findAll();
+        $this->data->action = Article::class;
     }
 
     public function actionAlbums()
@@ -39,30 +40,35 @@ class Admin extends
     {
         $this->data->th = ['id' => '', 'Имя' => '', 'Биография №' => '', 'Статус' => '' ];
         $this->data->table = Artists::findAll();
+        $this->data->action = Artists::class;
     }
 
     public function actionStatus()
     {
         $this->data->th = ['id' => '', 'Значение' => '' ];
         $this->data->table = Status::findAll();
+        $this->data->action = Status::class;
     }
 
     public function actionCategory()
     {
         $this->data->th = ['id' => '', 'Значение' => '' ];
         $this->data->table = Category::findAll();
+        $this->data->action = Category::class;
     }
 
     public function actionSongs()
     {
         $this->data->th = ['id' => '', 'Название' => '', 'Ссылка' => '' , 'id_альбома' => '' ];
         $this->data->table = Songs::findAll();
+        $this->data->action = Songs::class;
     }
 
     public function actionBiography()
     {
         $this->data->th = ['id' => '', 'Текст биографии' => ''];
         $this->data->table = Biography::findAll();
+        $this->data->action = Biography::class;
     }
 
     public function actionInsert($action = null)
