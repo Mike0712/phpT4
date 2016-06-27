@@ -5,6 +5,7 @@
 body {
     font-family: "Ubuntu", Georgia, "Times New Roman", Times, serif;
     color: #555;
+    background: url('../../public/images/bg.png') no-repeat;
 }
 
 h1, .h1,

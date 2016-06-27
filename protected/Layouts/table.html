@@ -6,16 +6,21 @@
         <h1 class="blog-title">Посты</h1>
 
 
-        <h2><a href="/admin/insert">Добавить запись</a></h2>
+        <h2><a href="/admin/insert/?action={{ action }}">Добавить запись</a></h2>
 
 
     </div>
+
+    {% set thead = table.0 %}
+    {% if th %}
+        {% set thead = th %}
+    {% endif %}
 
     <hr>
     <table class="table">
         <thead>
         <tr>
-            {% for head, r in table.0 %}
+            {% for head, r in thead %}
             <th>{{ head }}</th>
             {% endfor %}
             <th>Действие</th>
@@ -28,8 +33,9 @@
             <td>{{ cell[:100] }}</td>
             {% endfor %}
 
-            <td><p><a href="/admin/update/?id={{ row.getPk() }}" class="btn btn-info">Редактировать</a></p>
-                <p><a href="/admin/delete/?id={{ row.getPk() }}" class="btn btn-danger">Удалить</a></p></td>
+            <td><p><a href="/admin/update/?id={{ row.getPk() }}&action={{ action }}" class="btn btn-info">Редактировать
+            </a></p> <p><a href="/admin/delete/?id={{ row.getPk() }}&action={{ action }}" class="btn btn-danger">Удалить
+            </a></p></td>
         </tr>
         {% endfor %}
         <?php endforeach ?>
