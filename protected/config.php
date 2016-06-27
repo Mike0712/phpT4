@@ -9,6 +9,7 @@ return ['db' => [
         'dbname' => 'fansite',
         ],
     ],
+
     'projectinfo' => [
         'title' => 'Фансайт группы Red Hot Chili Papers'
     ],

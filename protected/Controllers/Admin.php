@@ -21,55 +21,66 @@ class Admin extends
 
     }
 
-    public function actionPosts()
+    public function actionPosts($act = null)
     {
+        $this->data->th = ['id' => '', 'Название' => '', 'Содержание' => '', 'Id категории' => '' ]; // Задаём названия
+                                                    // по умолчанию названия как в базе
         $this->data->table = Article::findAll();
     }
 
     public function actionAlbums()
     {
+        $this->data->th = ['id' =>'', 'title' => '', 'year' => ''];
         $this->data->table = Albums::findAll();
+        $this->data->action = Albums::class;
     }
 
     public function actionArtists()
     {
+        $this->data->th = ['id' => '', 'Имя' => '', 'Биография №' => '', 'Статус' => '' ];
         $this->data->table = Artists::findAll();
     }
 
     public function actionStatus()
     {
+        $this->data->th = ['id' => '', 'Значение' => '' ];
         $this->data->table = Status::findAll();
     }
 
     public function actionCategory()
     {
+        $this->data->th = ['id' => '', 'Значение' => '' ];
         $this->data->table = Category::findAll();
     }
 
     public function actionSongs()
     {
+        $this->data->th = ['id' => '', 'Название' => '', 'Ссылка' => '' , 'id_альбома' => '' ];
         $this->data->table = Songs::findAll();
     }
 
     public function actionBiography()
     {
+        $this->data->th = ['id' => '', 'Текст биографии' => ''];
         $this->data->table = Biography::findAll();
     }
 
-    public function actionInsert()
+    public function actionInsert($action = null)
     {
-        // Добавить нечего
+        $this->data->items = $action::findByPK(1);
+        $this->data->action = $action;
     }
 
-    public function actionUpdate()
+    public function actionUpdate($id = null, $action = null)
     {
-        $this->data->article = Article::findByPK($_GET['id']);
+        $this->data->items = $action::findByPK($id);
+        $this->data->action = $action;
     }
 
-    public function actionSave()
+    public function actionSave($action = null)
     {
         try {
-            $article = new Article();
+            $article = new $action();
             if (!empty($_POST['__id'])) {
                 $article->setNew(false);
             }
@@ -82,9 +93,9 @@ class Admin extends
         }
     }
 
-    public function actionDelete()
+    public function actionDelete($action)
     {
-        $article = Article::findByPK($_GET['id']);
+        $article = $action::findByPK($_GET['id']);
         $article->delete();
         $this->redirect('/admin/');
     }

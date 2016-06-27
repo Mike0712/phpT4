@@ -3,28 +3,36 @@
 <div class="container">
 
     <div class="blog-header">
-        <h1 class="blog-title">Добавить новость</h1>
+        <h1 class="blog-title">Добавить запись</h1>
 
     </div>
-    {% for error in errors %}
-    <div class="alert alert-danger">
-        {{ error.getMessage() }}
-    </div>
-        {% else %}
-    {% endfor%}
     <hr>
-    <h3>Добавить новость</h3>
-
+    <h3>Добавить запись</h3>
 
     <div class="col-sm-10 col-sm-offset-0 blog-sidebar">
         <div class="sidebar-module sidebar-module-inset">
+
             <form class="form-group-sm" action="/admin/save/" method="post">
-                <input name="__id" type="hidden" value="{{article.__id}}">
-                <input name="title" value="{{ article.title }}" type="text" class="form-control" placeholder="Заголовок">
-                <textarea name="lead" class="form-control" placeholder="Текст Новости">{{ article.lead }}</textarea>
-                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Опубликовать новость">
+
+                {% for k, val in items %}
+                    {% if k == '__id' %}
+                        <input name="{{ k }}" type="hidden" >
+                    {% else %}
+                    <div class="row">
+                        <div class="col-sm-4 ">
+                            {{ k }}
+                        </div>
+                    <div class="col-sm-12">
+                        <input name="{{ k }}" type="text" class="form-control">
+                        </div></div>
+                    {% endif %}
+                {% endfor %}
+                <br>
+                <input name="action" type="hidden" value="{{ action }}">
+                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Опубликовать запись">
 
             </form>
+
         </div>
     </div>
 </div>
