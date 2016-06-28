@@ -3,8 +3,8 @@
 <div class="container">
 
     <div class="blog-header">
-        <h1 class="blog-title">Посты</h1>
-
+        <h1 class="blog-title">{%block h1%}Посты{% endblock %}</h1>
+        <br>
         <form action="/admin/insert/" method="post">
             <input type="hidden" name="fields" value="{{ value.insert }}">
             <input type="submit" class="btn btn-info" value="Добавить запись">
@@ -38,7 +38,6 @@
 
             {% set str = 'строка' %}
 
-
             <td>
                 <!--Форма для редактирования-->
                 <form action="/admin/update/?id={{ row.Pk }}" method="post">
@@ -48,7 +47,7 @@
                 <!--Форма для удаления-->
                 <br>
                 <form action="/admin/delete/?id={{ row.Pk }}" method="post">
-                    <input type="hidden" name="fields" value="{{ value.insert }}">
+                    <input type="hidden" name="action" value="{{ value.model }}">
                     <input type="submit" class="btn btn-danger" value="Удалить">
                 </form>
         </tr>
@@ -56,6 +55,5 @@
         <?php endforeach ?>
         </tbody>
     </table>
-
 </div>
 {% endblock%}
