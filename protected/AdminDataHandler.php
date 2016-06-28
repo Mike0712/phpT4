@@ -14,6 +14,8 @@ class AdminDataHandler
 
     protected $thead;
 
+    protected $model;
+
     public function __construct(array $fields, string $model)
     {
         $insert = array_merge(['id' => '__id'], $fields, [$model]); // Сливаем в массив то, что собираемся передавать
@@ -23,13 +25,16 @@ class AdminDataHandler
         $this->table = $model::findAll();
 
         $this->thead = $fields;
+
+        $this->model = $model;
     }
 
     public function getData()
-    {
+    { // Сливаем всё в массив
         $data['insert'] = $this->insert;
         $data['table'] = $this->table;
         $data['thead'] = $this->thead;
+        $data['model'] = $this->model;
         return $data;
     }
 }

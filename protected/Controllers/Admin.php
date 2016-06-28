@@ -106,9 +106,8 @@ class Admin extends
         }
     }
 
-    public function actionDelete($id = null, $fields = [])
+    public function actionDelete($id = null, $action = [])
     {
-        $action = array_pop(unserialize(base64_decode($fields)));
         $item = $action::findByPK($id);
         $item->delete();
         $this->redirect('/admin/');
