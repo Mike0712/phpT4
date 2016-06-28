@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\AdminDataTable;
+use App\AdminDataHandler;
 use App\Models\Article;
 use App\Models\Albums;
 use App\Models\Artists;
@@ -13,6 +13,12 @@ use App\Models\Status;
 use T4\Core\MultiException;
 use T4\Mvc\Controller;
 
+/**
+ * Class Admin
+ * @package App\Controllers
+ *
+ * @property \App\AdminBaseHandler $value
+ */
 class Admin extends
     Controller
 {
@@ -23,71 +29,48 @@ class Admin extends
 
     public function actionPosts($act = null)
     {
-        $fields = ['id' => '__id', 'Название' => 'title', 'Содержание' => 'lead', 'Id категории' =>
-            '__category_id', Article::class];
-        // В ключах задаём названия для полей, в значениях данные как
-        // в базе (требуется если таблица пустая). Последним элементом передаём название модели
-
-        $this->data->insert = base64_encode(serialize($fields)); // То что передаём через форму в Insert, Update, Delete
-        unset($fields[0]); // Удаляем значение модели (в шаблоне это не нужно)
-        $this->data->th = $fields; // Заголовки таблицы (для вывода в шаблон)
-        $this->data->table = Article::findAll(); // Данные таблицы для вывода в шаблон
+        $fields = new AdminDataHandler(['Название' => 'title', 'Содержание' => 'lead', 'Id категории' =>
+            '__category_id'], Article::class); // Передаём в качестве аргументов массив 'название полей' =>
+        // 'название колонок в БД', модель которую хотим вызвать в этом контроллере
+        $this->data->value = $fields->getData(); // Передаём данные в шаблон, обязательно в переменную value
     }
 
     public function actionAlbums()
     {
-        $fields = ['id' => '__id', 'Название' => 'title', 'Год' => 'year', Albums::class];
-
-        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
-        $this->data->th = $fields;
-        $this->data->table = Albums::findAll();
+        $fields = new AdminDataHandler(['Название' => 'title', 'Год' => 'year'], Albums::class);
+        $this->data->value = $fields->getData();
     }
 
     public function actionArtists()
     {
-        $fields = ['id' => '__id', 'Имя' => 'name', 'Биография №' => '__biography_id', 'Статус' => '__status_id',
-        Artists::class];
-
-        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
-        $this->data->th = $fields;
-        $this->data->table = Artists::findAll();
+        $fields = new AdminDataHandler(['Имя' => 'name', 'Биография №' => '__biography_id', 'Статус' => '__status_id'],
+            Artists::class);
+        $this->data->value = $fields->getData();
     }
 
     public function actionStatus()
     {
-        $fields = ['id' => '__id', 'Значение' => 'status', Status::class];
-
-        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
-        $this->data->th = $fields;
-        $this->data->table = Status::findAll();
+        $fields = new AdminDataHandler(['Значение' => 'status'], Status::class);
+        $this->data->value = $fields->getData();
     }
 
     public function actionCategory()
     {
-        $fields = ['id' => '', 'Значение' => 'title', Category::class];
-
-        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
-        $this->data->th = $fields;
-        $this->data->table = Category::findAll();
+        $fields = new AdminDataHandler(['Значение' => 'title'], Category::class);
+        $this->data->value = $fields->getData();
     }
 
     public function actionSongs()
     {
-        $fields = ['id' => '__id', 'Название' => 'song', 'Ссылка' => 'link', 'id_альбома' => '__albums_id',
-            Songs::class ];
-
-        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
-        $this->data->th = $fields;
-        $this->data->table = Songs::findAll();
+        $fields = new AdminDataHandler(['Название' => 'song', 'Ссылка' => 'link', 'id_альбома' => '__albums_id'],
+            Songs::class);
+        $this->data->value = $fields->getData();
     }
 
     public function actionBiography()
     {
-        $fields = ['id' => '__id', 'Текст биографии' => 'biography', Biography::class];
-
-        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
-        $this->data->th = $fields;
-        $this->data->table = Biography::findAll();
+        $fields = new AdminDataHandler(['id' => '__id', 'Текст биографии' => 'biography'], Biography::class);
+        $this->data->value = $fields->getData();
     }
 
     public function actionInsert($fields = [])
@@ -131,8 +114,9 @@ class Admin extends
 
     public function actionVasya()
     {
-        foreach ($this as $k => $v){
+        foreach ($this as $k => $v) {
             var_dump($k);
-        } die;
+        }
+        die;
     }
 }
