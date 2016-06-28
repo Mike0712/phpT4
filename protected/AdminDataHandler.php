@@ -24,7 +24,7 @@ class AdminDataHandler
 
         $this->table = $model::findAll();
 
-        $this->thead = $fields;
+        $this->thead = array_merge(['id' => '__id'] , $fields);
 
         $this->model = $model;
     }

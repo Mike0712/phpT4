@@ -71,7 +71,7 @@ class Admin extends
 
     public function actionBiography()
     {
-        $fields = new AdminDataHandler(['id' => '__id', 'Текст биографии' => 'biography'], Biography::class);
+        $fields = new AdminDataHandler(['Текст биографии' => 'biography'], Biography::class);
         $this->data->value = $fields->getData();
     }
 
