@@ -5,11 +5,14 @@
     <div class="blog-header">
         <h1 class="blog-title">Посты</h1>
 
-
-        <h2><a href="/admin/insert/?action={{ action }}">Добавить запись</a></h2>
+        <form action="/admin/insert/" method="post">
+            <input type="hidden" name="fields" value="{{ insert }}">
+            <input type="submit" class="btn btn-info" value="Добавить запись">
+        </form>
 
 
     </div>
+
 
     {% set thead = table.0 %}
     {% if th %}
@@ -33,9 +36,21 @@
             <td>{{ cell[:100] }}</td>
             {% endfor %}
 
-            <td><p><a href="/admin/update/?id={{ row.getPk() }}&action={{ action }}" class="btn btn-info">Редактировать
-            </a></p> <p><a href="/admin/delete/?id={{ row.getPk() }}&action={{ action }}" class="btn btn-danger">Удалить
-            </a></p></td>
+            {% set str = 'строка' %}
+
+
+            <td>
+                <!--Форма для редактирования-->
+                <form action="/admin/update/?id={{ row.Pk }}" method="post">
+                    <input type="hidden" name="fields" value="{{ insert }}">
+                    <input type="submit" class="btn btn-info" value="Редактировать">
+                </form>
+                <!--Форма для удаления-->
+                <br>
+                <form action="/admin/delete/?id={{ row.Pk }}" method="post">
+                    <input type="hidden" name="fields" value="{{ insert }}">
+                    <input type="submit" class="btn btn-danger" value="Удалить">
+                </form>
         </tr>
         {% endfor %}
         <?php endforeach ?>

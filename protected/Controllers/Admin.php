@@ -23,62 +23,84 @@ class Admin extends
 
     public function actionPosts($act = null)
     {
-        $this->data->th = ['id' => '', 'Название' => '', 'Содержание' => '', 'Id категории' => '' ]; // Задаём названия
-                                                    // по умолчанию названия как в базе
-        $this->data->table = Article::findAll();
-        $this->data->action = Article::class;
+        $fields = ['id' => '__id', 'Название' => 'title', 'Содержание' => 'lead', 'Id категории' =>
+            '__category_id', Article::class];
+        // В ключах задаём названия для полей, в значениях данные как
+        // в базе (требуется если таблица пустая). Последним элементом передаём название модели
+
+        $this->data->insert = base64_encode(serialize($fields)); // То что передаём через форму в Insert, Update, Delete
+        unset($fields[0]); // Удаляем значение модели (в шаблоне это не нужно)
+        $this->data->th = $fields; // Заголовки таблицы (для вывода в шаблон)
+        $this->data->table = Article::findAll(); // Данные таблицы для вывода в шаблон
     }
 
     public function actionAlbums()
     {
-        $this->data->th = ['id' =>'', 'title' => '', 'year' => ''];
+        $fields = ['id' => '__id', 'Название' => 'title', 'Год' => 'year', Albums::class];
+
+        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
+        $this->data->th = $fields;
         $this->data->table = Albums::findAll();
-        $this->data->action = Albums::class;
     }
 
     public function actionArtists()
     {
-        $this->data->th = ['id' => '', 'Имя' => '', 'Биография №' => '', 'Статус' => '' ];
+        $fields = ['id' => '__id', 'Имя' => 'name', 'Биография №' => '__biography_id', 'Статус' => '__status_id',
+        Artists::class];
+
+        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
+        $this->data->th = $fields;
         $this->data->table = Artists::findAll();
-        $this->data->action = Artists::class;
     }
 
     public function actionStatus()
     {
-        $this->data->th = ['id' => '', 'Значение' => '' ];
+        $fields = ['id' => '__id', 'Значение' => 'status', Status::class];
+
+        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
+        $this->data->th = $fields;
         $this->data->table = Status::findAll();
-        $this->data->action = Status::class;
     }
 
     public function actionCategory()
     {
-        $this->data->th = ['id' => '', 'Значение' => '' ];
+        $fields = ['id' => '', 'Значение' => 'title', Category::class];
+
+        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
+        $this->data->th = $fields;
         $this->data->table = Category::findAll();
-        $this->data->action = Category::class;
     }
 
     public function actionSongs()
     {
-        $this->data->th = ['id' => '', 'Название' => '', 'Ссылка' => '' , 'id_альбома' => '' ];
+        $fields = ['id' => '__id', 'Название' => 'song', 'Ссылка' => 'link', 'id_альбома' => '__albums_id',
+            Songs::class ];
+
+        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
+        $this->data->th = $fields;
         $this->data->table = Songs::findAll();
-        $this->data->action = Songs::class;
     }
 
     public function actionBiography()
     {
-        $this->data->th = ['id' => '', 'Текст биографии' => ''];
+        $fields = ['id' => '__id', 'Текст биографии' => 'biography', Biography::class];
+
+        $this->data->insert = base64_encode(serialize($fields)); unset($fields[0]);
+        $this->data->th = $fields;
         $this->data->table = Biography::findAll();
-        $this->data->action = Biography::class;
     }
 
-    public function actionInsert($action = null)
+    public function actionInsert($fields = [])
     {
-        $this->data->items = $action::findByPK(1);
-        $this->data->action = $action;
+        $items = unserialize(base64_decode($fields));
+        $this->data->action = array_pop($items);
+        $this->data->items = $items;
+
     }
 
-    public function actionUpdate($id = null, $action = null)
+    public function actionUpdate($id = null, $fields = [])
     {
+        $action = array_pop(unserialize(base64_decode($fields)));
         $this->data->items = $action::findByPK($id);
         $this->data->action = $action;
     }
@@ -94,15 +116,23 @@ class Admin extends
 
             $article->save();
             $this->redirect('/admin/');
-        } catch (MultiException $e){
+        } catch (MultiException $e) {
             $this->data->errors = $e;
         }
     }
 
-    public function actionDelete($action)
+    public function actionDelete($id = null, $fields = [])
     {
-        $article = $action::findByPK($_GET['id']);
-        $article->delete();
+        $action = array_pop(unserialize(base64_decode($fields)));
+        $item = $action::findByPK($id);
+        $item->delete();
         $this->redirect('/admin/');
+    }
+
+    public function actionVasya()
+    {
+        foreach ($this as $k => $v){
+            var_dump($k);
+        } die;
     }
 }

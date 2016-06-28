@@ -15,7 +15,7 @@
             <form class="form-group-sm" action="/admin/save/" method="post">
 
                 {% for k, val in items %}
-                    {% if k == '__id' %}
+                    {% if val == '__id' %}
                         <input name="{{ k }}" type="hidden" >
                     {% else %}
                     <div class="row">
@@ -23,7 +23,7 @@
                             {{ k }}
                         </div>
                     <div class="col-sm-12">
-                        <input name="{{ k }}" type="text" class="form-control">
+                        <input name="{{ val }}" type="text" class="form-control">
                         </div></div>
                     {% endif %}
                 {% endfor %}
