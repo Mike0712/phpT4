@@ -6,7 +6,7 @@
         <h1 class="blog-title">Посты</h1>
 
         <form action="/admin/insert/" method="post">
-            <input type="hidden" name="fields" value="{{ insert }}">
+            <input type="hidden" name="fields" value="{{ value.insert }}">
             <input type="submit" class="btn btn-info" value="Добавить запись">
         </form>
 
@@ -15,8 +15,8 @@
 
 
     {% set thead = table.0 %}
-    {% if th %}
-        {% set thead = th %}
+    {% if value.thead %}
+        {% set thead = value.thead %}
     {% endif %}
 
     <hr>
@@ -30,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for row in table %}
+        {% for row in value.table %}
         <tr>
             {% for cell in row %}
             <td>{{ cell[:100] }}</td>
@@ -42,13 +42,13 @@
             <td>
                 <!--Форма для редактирования-->
                 <form action="/admin/update/?id={{ row.Pk }}" method="post">
-                    <input type="hidden" name="fields" value="{{ insert }}">
+                    <input type="hidden" name="fields" value="{{ value.insert }}">
                     <input type="submit" class="btn btn-info" value="Редактировать">
                 </form>
                 <!--Форма для удаления-->
                 <br>
                 <form action="/admin/delete/?id={{ row.Pk }}" method="post">
-                    <input type="hidden" name="fields" value="{{ insert }}">
+                    <input type="hidden" name="fields" value="{{ value.insert }}">
                     <input type="submit" class="btn btn-danger" value="Удалить">
                 </form>
         </tr>

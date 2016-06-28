@@ -18,6 +18,8 @@ use T4\Mvc\Controller;
  * @package App\Controllers
  *
  * @property \App\AdminBaseHandler $value
+ * @property string $action
+ * @property \App\AdminBaseHandler $items
  */
 class Admin extends
     Controller
