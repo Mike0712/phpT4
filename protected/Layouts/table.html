@@ -1,9 +1,9 @@
 {% extends 'Back.html' %}
 {% block content %}
-<div class="container">
-
+<div class="content">
     <div class="blog-header">
         <h1 class="blog-title">{%block h1%}Посты{% endblock %}</h1>
+
         <br>
         <form action="/admin/insert/" method="post">
             <input type="hidden" name="fields" value="{{ value.insert }}">
