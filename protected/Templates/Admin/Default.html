@@ -1,8 +1,15 @@
 {% extends 'Back.html' %}
 
 {% block content %}
-<a href="/admin/posts">Посты</a><br>
-<a href="/admin/albums">Альбомы</a><br>
-<a href="/admin/artists">Артисты</a><br>
+
+<div class="container">
+    <div class="col-sm-3">
+        <ul class="list-group list-group-item-danger">
+            <li><a href="/admin/posts">Посты</a></li>
+            <li><a href="/admin/albums">Альбомы</a></li>
+            <li><a href="/admin/artists">Артисты</a></li>
+        </ul>
+    </div>
+</div>
 
 {% endblock%}

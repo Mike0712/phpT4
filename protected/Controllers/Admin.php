@@ -26,7 +26,6 @@ class Admin extends
 {
     public function actionDefault()
     {
-
     }
 
     public function actionPosts()
