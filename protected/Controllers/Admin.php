@@ -31,7 +31,6 @@ class Admin extends
 
     public function actionPosts()
     {
-        var_dump(Article::getColumns());die;
         $fields = new AdminDataHandler(['Название' => 'title', 'Содержание' => 'lead', 'Id категории' =>
             '__category_id'], Article::class); // Передаём в качестве аргументов массив 'название полей' =>
         // 'название колонок в БД', модель которую хотим вызвать в этом контроллере

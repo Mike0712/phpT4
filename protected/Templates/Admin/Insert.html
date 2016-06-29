@@ -16,7 +16,7 @@
 
                 {% for k, val in items %}
                     {% if val == '__id' %}
-                        <input name="{{ k }}" type="hidden" >
+                        <input name="{{ k }}" type="hidden" value="{{null}}">
                     {% else %}
                     <div class="row">
                         <div class="col-sm-4 ">
