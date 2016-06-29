@@ -13,17 +13,11 @@
 
     </div>
 
-
-    {% set thead = table.0 %}
-    {% if value.thead %}
-        {% set thead = value.thead %}
-    {% endif %}
-
     <hr>
     <table class="table">
         <thead>
         <tr>
-            {% for head, r in thead %}
+            {% for head, r in value.thead %}
             <th>{{ head }}</th>
             {% endfor %}
             <th>Действие</th>
