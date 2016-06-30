@@ -95,6 +95,9 @@ class Admin extends
 
     public function actionSave($action = null)
     {
+        if (isset($_FILES['files'])) {
+            (new AdminFileManipulator())->action();
+        }die;
         try {
             $article = new $action();
             if (!empty($_POST['__id'])) {
