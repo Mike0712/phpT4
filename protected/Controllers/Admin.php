@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\AdminDataHandler;
+use App\AdminFileManipulator;
 use App\Models\Article;
 use App\Models\Albums;
 use App\Models\Artists;
@@ -76,6 +77,9 @@ class Admin extends
 
     public function actionInsert($fields = [])
     {
+        if(empty($fields)){
+            $this->redirect('/admin/');
+        }
         $items = unserialize(base64_decode($fields));
         $this->data->action = array_pop($items);
         $this->data->items = $items;
