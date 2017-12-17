@@ -11,6 +11,7 @@ return ['db' => [
     ],
 
     'projectinfo' => [
-        'title' => 'Фансайт группы Red Hot Chili Papers'
+        'title' => 'Фансайт группы Red Hot Chili Papers',
+        'domain' => '{{domain}}',
     ],
 ];

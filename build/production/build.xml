@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="php3" default="build" basedir=".">
+
+    <target name="build" depends="copy, composer, replaceData, symlink"/>
+
+    <target name="vars">
+
+        <resolvepath propertyName="tmp.dir" file="${project.basedir}" />
+        <echo msg="Temporary dir: ${tmp.dir}" />
+
+        <php returnProperty="build.time" function="date">
+            <param value="Ymd_his" />
+        </php>
+
+        <resolvepath propertyName="target.dir" file="../php3/${build.time}" />
+
+        <echo msg="Target dir: ${target.dir}" />
+
+        <property name="domain" value="php3.site" />
+    </target>
+
+    <target name="copy" depends="vars">
+        <copy todir="${target.dir}">
+            <fileset dir="${project.basedir}">
+                <include name="**" />
+                <exclude name=".idea/**" />
+                <exclude name="build/**" />
+                <exclude name="protected/config.php" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="replaceData" depends="copy">
+        <copy file="${project.basedir}/protected/config.php" tofile="${target.dir}/protected/config.php" overwrite="true">
+            <filterchain>
+                <replacetokens begintoken="{{" endtoken="}}">
+                    <!-- MySQL TOKENS -->
+                    <token key="domain" value="${domain}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+
+    <target name="composer" depends="replaceData">
+        <exec command="composer install" dir="${target.dir}" checkreturn="true" passthru="true"/>
+    </target>
+
+    <target name="symlink" depends="composer">
+        <symlink link="../public_html/php3.site" target="../php3/${build.time}" overwrite="true"></symlink>
+    </target>
+
+</project>
