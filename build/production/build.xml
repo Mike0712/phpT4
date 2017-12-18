@@ -46,6 +46,7 @@
     </target>
 
     <target name="symlink" depends="composer">
+        <mkdir dir="../public_html" />
         <symlink link="../public_html/php3.site" target="../php3/${build.time}" overwrite="true"></symlink>
     </target>
 
